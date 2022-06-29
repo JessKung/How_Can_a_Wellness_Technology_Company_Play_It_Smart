@@ -1,11 +1,37 @@
-# Using Phython3 to clean data
+### Using Phython3 to clean data
 
 # import required libarary
 import numpy as np 
 import pandas as pd 
 import datetime as dt 
 
-# improt datasets and check head
+# improt datasets and check first 5 rows
 dailyActivity = pd.read_csv('..Google Case Study 2/archive/Fitabase Data 4.12.16-5.12.16/dailyActivity_merged.csv')
 dailyActivity.head()
 
+
+##data cleaning
+
+# check if any value is null
+dailyActivity = dailyActivity.replace('null',np.NaN) #replace the characters'null' to null
+dailyActivity.isnull().any().sum()
+dailyActivity.fillna("Unknown") #fill "Unknown" if any null value
+
+# check basic infomation of data
+dailyActivity.info()
+
+# convert "ActivityDate" to datatime64 dtype and format to yyyy-mm-dd
+dailyActivity["ActivityDate"] = pd.to_datetime(dailyActivity["ActivityDate"], format="%m/%d/%Y")
+
+# check statistical values of data
+dailyActivity.describe()
+
+# check if unusual dateset exist, if yes, delete it.
+# calories = 0
+calories_zero = (dailyActivity[dailyActivity['Calories']==0])
+calories_zero
+# If Id + Activity Dat duplicated, drop rows
+dailyActivity.drop_duplicates(subset=['Id', 'ActivityDate'])
+
+# cleaned datasets to csv
+dailyActivity.to_csv('C:/Users/toky2/Desktop/Google Case Study 2/archive/Fitabase Data 4.12.16-5.12.16/Cleaned_dailyActivity_merged.csv')
