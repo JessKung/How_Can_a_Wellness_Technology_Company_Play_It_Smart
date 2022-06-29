@@ -1,0 +1,11 @@
+# Using Phython3 to clean data
+
+# import required libarary
+import numpy as np 
+import pandas as pd 
+import datetime as dt 
+
+# improt datasets and check head
+dailyActivity = pd.read_csv('..Google Case Study 2/archive/Fitabase Data 4.12.16-5.12.16/dailyActivity_merged.csv')
+dailyActivity.head()
+
